@@ -1,0 +1,28 @@
+# Node.js 環境
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# 打包產物
+dist/
+build/
+
+# 系統檔案
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Icon?
+
+# IDE 設定檔
+.vscode/
+.idea/
+*.swp
+
+# 暫存/日誌
+*.log
+*.tmp
+
+# 參考資料與其他輔助工具
+reference/
+*.bat
