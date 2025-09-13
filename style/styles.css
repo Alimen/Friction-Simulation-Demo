@@ -143,7 +143,7 @@ input[type="range"]{ width:17.5em; margin-top:-0px; }
 .ui > label { padding-top:2px; }
 button#reset { margin-top:-3px; }
 div#arrow-container { margin-bottom:-8px; }
-.arrow { display:inline-block; width:32px; height:18px; margin-left:1em; transform: translate(0, 3px); background-image:url(../image/arrows.png); }
+.arrow { display:inline-block; width:32px; height:18px; margin-left:1em; transform: translate(0, 3px); background-image:url(/image/arrows.png); }
 .arrow-label { margin-top:-2px; }
 .arrow#arrow-force-img { background-position:0 0; }
 .arrow#arrow-normal-img { background-position:0 -18px; }
