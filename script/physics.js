@@ -1,4 +1,5 @@
 // === FrictionSim: 物理模擬核心（不依賴 p5） ===
+
 (function (global) {
     // ---- 可調參數（之後可由 UI 覆寫） ----
     let mass = 5.0;          // kg
@@ -66,7 +67,7 @@
         state.t += dt;
 
         // 計算兩側截止點
-        const physicalWidth = windowWidth / pixelsPerMeter;
+        const physicalWidth = windowWidth / FrictionRenderer.getPixelsPerMeter();
         if (state.x > physicalWidth * 0.5 - 1) { state.x = physicalWidth * 0.5 - 1; state.v = 0; }
         if (state.x < -physicalWidth * 0.5 + 1) { state.x = -physicalWidth * 0.5 + 1; state.v = 0; }
     }

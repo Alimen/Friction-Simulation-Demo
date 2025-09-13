@@ -1,4 +1,5 @@
-// gui.js
+// === 控制項操作 ===
+
 (function (global) {
     'use strict';
 
