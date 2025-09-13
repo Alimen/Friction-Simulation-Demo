@@ -8,8 +8,6 @@ let accTime = 0;
 // 影像資產
 let imgBg;            // 背景圖
 let imgGround;        // 地面圖
-let imgGroundLeft;
-let imgGroundRight;
 let blockTex = {};    // 方塊貼圖表（依質量挑圖）
 
 // 載入圖片（檔名先用 placeholder）
@@ -17,8 +15,6 @@ function preload() {
     // 你可以換成自己的路徑，例如 "assets/bg.png" 等
     imgBg = loadImage('image/background.jpg');
     imgGround = loadImage('image/table.png');
-    imgGroundLeft = loadImage('image/table-left.png');
-    imgGroundRight = loadImage('image/table-right.png');
 
     // 依質量區間提供兩種示意材質（你可以自由增減）
     blockTex.wood = loadImage('image/block-wood.png');
@@ -93,9 +89,9 @@ function renderScene() {
         const groundStripW = w + 60;
         const offsetY = -50;
         // 用 CENTER 對齊，讓圖的中心落在 (w/2, groundY + groundStripH/2)
-        image(imgGround, w * 0.5, groundY + offsetY + groundStripH * 0.5, groundStripW - 200 + 2, groundStripH);
-        image(imgGroundRight, w * 0.5 + groundStripW * 0.5 - 50, groundY + offsetY + groundStripH * 0.5, 100, groundStripH);
-        image(imgGroundLeft,  w * 0.5 - groundStripW * 0.5 + 50, groundY + offsetY + groundStripH * 0.5, 100, groundStripH);
+        image(imgGround, w * 0.5, groundY + offsetY + groundStripH * 0.5, groundStripW - 200 + 2, groundStripH, 100, 0, imgGround.width - 200, imgGround.height);
+        image(imgGround, w * 0.5 + groundStripW * 0.5 - 50, groundY + offsetY + groundStripH * 0.5, 100, groundStripH, imgGround.width - 100, 0, 100, imgGround.height);
+        image(imgGround,  w * 0.5 - groundStripW * 0.5 + 50, groundY + offsetY + groundStripH * 0.5, 100, groundStripH, 0, 0, 100, imgGround.height);
     } else {
         // [FALLBACK] 若地面圖未載到，退回原本的線條畫法
         stroke(60); strokeWeight(2);
@@ -142,24 +138,24 @@ function renderScene() {
 
     if (FrictionGui.showForces()) {
         // 施力 F_app — 紅
-        drawArrow(cx, cy, cx + L(st.forces.applied), cy, "#dc3c3c");
+        drawArrow(cx, cy, cx + L(st.forces.applied), cy, '#dc3c3c');
 
         // 重力 mg — 黑
-        drawArrow(cx, cy, cx, cy + N(st.forces.gravity), "#202020");
+        drawArrow(cx, cy, cx, cy + N(st.forces.gravity), '#202020');
 
         // 正向力 N — 綠
-        drawArrow(cx, cy, cx, cy - N(st.forces.normal), "#28c878");
+        drawArrow(cx, cy, cx, cy - N(st.forces.normal), '#28c878');
     }
 
     if (FrictionGui.showFrictions()) {
         // 靜摩擦 — 深藍（可能為 0）
         if (Math.abs(st.forces.staticFric) > 1e-8) {
-            drawArrow(cx, cy + boxH / 2 - 3, cx + L(st.forces.staticFric), cy + boxH / 2 - 3, "#3c8cff");
+            drawArrow(cx, cy + boxH / 2 - 3, cx + L(st.forces.staticFric), cy + boxH / 2 - 3, '#3c8cff');
         }
 
         // 動摩擦 — 淺藍（可能為 0）
         if (Math.abs(st.forces.kineticFric) > 1e-8) {
-            drawArrow(cx, cy + boxH / 2 - 3, cx + L(st.forces.kineticFric), cy + boxH / 2 - 3, "#bed6ee");
+            drawArrow(cx, cy + boxH / 2 - 3, cx + L(st.forces.kineticFric), cy + boxH / 2 - 3, '#bed6ee');
         }
     }
 }
@@ -189,7 +185,7 @@ function getBlockScale(mass) {
 }
 
 function getBlockTex(name) {
-    if (name == "metal") return blockTex.metal;
+    if (name == 'metal') return blockTex.metal;
     return blockTex.wood;
 }
 
