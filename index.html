@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>摩擦力動畫演示</title>
+    <link rel="stylesheet" href="style/styles.css" />
+    <link rel="stylesheet" href="style/dropdown.css" />
+    <link rel="stylesheet" href="style/checkbox.css" />
+
+    <script src="script/p5.min.js"></script>
+    <script src="script/physics.js"></script>
+
+    <script src="script/render_p5.js" defer></script>
+    <script src="script/details.js" defer></script>
+    <script src="script/gui.js" defer></script>
+</head>
+<body>
+  <!-- 模擬區：佔滿整個視窗（在最底層） -->
+  <main id="sim-area">
+  </main>
+
+  <!-- 資訊框群：浮在最上層 -->
+  <section class="info-bar" aria-label="資訊／控制框">
+    <!-- 靠左 -->
+    <details class="info-card" open>
+      <summary>材質</summary>
+      <div class="card-body">
+          <div class="row">
+              <label for="mass" class="left">質量</label>
+              <div>
+                  <select class="ui dropdown" id="mass">
+                      <option value="5" selected>5 公斤</option>
+                      <option value="10">10 公斤</option>
+                  </select><br />
+                  <div class="note">
+                      重力加速度 g = 10 m/s²
+                  </div>
+              </div>
+          </div>
+          <div class="space"></div>
+          <div class="row last-row">
+              <label for="mat" class="left">材質</label>
+              <div>
+                  <select class="ui dropdown" id="mat">
+                      <option value="wood" selected>木頭 (μₛ 0.4, μₖ 0.3)</option>
+                      <option value="metal">金屬 (μₛ 0.3, μₖ 0.2)</option>
+                  </select><br />
+                  <div class="note">
+                      μₛ = 靜摩擦係數；μₖ = 動摩擦係數
+                  </div>
+              </div>
+          </div>
+      </div>
+    </details>
+
+    <!-- 置中 -->
+    <details class="info-card" open>
+        <summary>控制</summary>
+        <div class="card-body">
+            <div class="row auto-gap">
+                <label for="force">施力</label>
+                <input id="force" type="range" min="-100" max="100" step="1" value="0" />
+                <span id="forceVal">0 N</span>
+            </div>
+            <div class="space"></div>
+            <div class="row auto-gap">
+                <div class="ui checkbox">
+                    <input id="showFrictions" type="checkbox" checked />
+                    <label for="showFrictions">顯示摩擦力</label>
+                </div>
+                <div class="gap"></div>
+                <div class="ui checkbox">
+                    <input id="showForces" type="checkbox" checked />
+                    <label for="showForces">顯示力圖</label>
+                </div>
+                <div class="gap"></div>
+                <button id="reset" type="button">重設位置</button>
+            </div>
+            <div id="arrow-container">
+                <div class="row">
+                    <div id="arrow-force">
+                        <img src="image/arrow-force.png" class="arrow" />
+                        <label class="arrow-label">施力　　</label>
+                    </div>
+                    <div id="arrow-normal">
+                        <img src="image/arrow-normal.png" class="arrow" />
+                        <label class="arrow-label">正向力　</label>
+                    </div>
+                    <div id="arrow-gravity">
+                        <img src="image/arrow-gravity.png" class="arrow" />
+                        <label class="arrow-label">重力</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div id="arrow-static">
+                        <img src="image/arrow-static.png" class="arrow" />
+                        <label class="arrow-label">靜摩擦力</label>
+                    </div>
+                    <div id="arrow-dynamic">
+                        <img src="image/arrow-dynamic.png" class="arrow" />
+                        <label class="arrow-label">動摩擦力</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </details>
+
+    <!-- 靠右 -->
+    <details class="info-card" open>
+      <summary>即時數值</summary>
+      <div class="card-body stats">
+        <div class="stat"><div>摩擦力</div><div class="v" id="fricVal">0</div><div>N</div></div>
+        <div class="stat"><div>合力</div><div class="v" id="netVal">0</div><div>N</div></div>
+        <div class="stat"><div>加速度</div><div class="v" id="accVal">0</div><div>m/s²</div></div>
+      </div>
+    </details>
+  </section>
+</body>
+</html>
+

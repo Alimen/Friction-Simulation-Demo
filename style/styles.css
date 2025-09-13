@@ -1,0 +1,152 @@
+/* 簡單 reset 與主題變數 */
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: ui-sans-serif, system-ui, "PingFang TC", "Noto Sans TC", Arial, sans-serif;
+  color: #0f172a; /* slate-900 */
+  background: #0b1020;
+}
+
+/* ---------- 模擬區（底層，滿版） ---------- */
+#sim-area {
+  position: fixed; /* 佔滿視窗並固定 */
+  inset: 0;
+  z-index: 0; /* 在底層 */
+  overflow: hidden;
+}
+
+/* 模擬區 canvas -> 現在由 p5.js 自動創建 
+#sim-canvas {
+  width: 100vw;
+  height: 100vh;
+  display: block;
+}
+*/
+
+/* ---------- 浮在上層的資訊框群 ---------- */
+/* 大螢幕：三個框靠左／置中／靠右對齊上緣 */
+.info-bar {
+  position: fixed;
+  top: 1rem;
+  left: 0;
+  right: 0;
+  z-index: 10; /* 蓋在模擬區上方 */
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: start;
+  gap: 1rem;
+  padding: 0 1rem;
+  pointer-events: none; /* 讓點擊不會被整個容器攔截 */
+}
+
+/* 每張卡片自身可以互動 */
+.info-card {
+  pointer-events: auto;
+  justify-self: start;    /* 預設靠左（第一張） */
+  width: min(28rem, 92vw);
+  max-width: 100%;
+  border: 1px solid #272727;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.86);
+  backdrop-filter: blur(8px);
+  box-shadow:
+    0 8px 24px rgba(0,0,0,0.25),
+    inset 0 1px 0 rgba(255,255,255,0.6);
+  overflow: clip;
+}
+
+/* 第二張置中、第三張靠右 */
+.info-card:nth-child(2) { justify-self: center; }
+.info-card:nth-child(3) { justify-self: end; }
+
+/* 折疊標題列 */
+.info-card > summary {
+  list-style: none; /* 移除預設箭頭 */
+  cursor: pointer;
+  padding: 0.75rem 1rem;
+  font-weight: 700;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  position: relative;
+  user-select: none;
+}
+
+/* 自行畫一個小箭頭 */
+.info-card > summary::after {
+  content: "";
+  width: .6rem;
+  height: .6rem;
+  border-right: 2px solid #334155; /* slate-700 */
+  border-bottom: 2px solid #334155;
+  transform: rotate(45deg);
+  transition: transform .25s ease;
+  margin-left: auto;
+}
+
+/* 展開時箭頭朝上 */
+.info-card[open] > summary::after {
+  transform: rotate(-135deg);
+}
+
+/* 內容區（可動畫收合） */
+.card-body {
+  padding: 0 1rem 1rem;
+  /* 交給 JS 控高；先設初值避免抖動 */
+  display: grid;
+  grid-template-rows: 1fr;
+  transition: grid-template-rows .28s ease;
+}
+
+/* summary 的預設箭頭空間在部分瀏覽器仍存在，保險處理 */
+.info-card > summary::-webkit-details-marker { display: none; }
+
+/* 手機直式或窄畫面：改為由上到下排列，靠左 */
+@media (max-width: 820px) {
+  .info-bar {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+    top: 0.75rem;
+    padding-inline: 0.75rem;
+  }
+  .info-card {
+    width: 100%;
+    justify-self: stretch;
+  }
+}
+
+/* 顏色微調：深色背景上更易讀 */
+@media (prefers-color-scheme: dark) {
+  .info-card {
+    background: rgba(248, 250, 252, 0.86); /* slate-50 透明 */
+  }
+  .info-card > summary { color: #0f172a; }
+  .card-body { color: #0f172a; }
+}
+
+/* 各面板內容 */
+.card-body > .space { height:12px; }
+
+.row { display:flex; margin:5px 0 5px; }
+.row > .left { margin-top:10px; margin-right:.5em; }
+.ui.dropdown { width:12em; }
+.row > div > .note { font-size:12px; display:inline-block; }
+.row.auto-gap { gap:.5em; }
+.row > .gap { width:1em; }
+.last-row { margin-bottom:-3px; }
+
+input[type="range"]{ width:17.5em; margin-top:-0px; }
+.ui > label { padding-top:2px; }
+button#reset { margin-top:-3px; }
+div#arrow-container { margin-bottom:-8px; }
+.arrow { width:32px; height:18px; margin-left:1em; transform: translate(0, 2px); }
+.arrow-label { margin-top:-2px; }
+
+.stats{ display:grid; grid-template-columns: repeat(3, 1fr); gap:8px; }
+.stat{ background:rgb(248, 250, 252); border:1px solid var(--border); border-radius:10px; padding:8px; text-align:center; }
+.stat .v{ font-size:20px; font-weight:700; }
+
