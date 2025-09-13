@@ -16,12 +16,12 @@
     // 載入圖片（檔名先用 placeholder）
     function preload() {
         // 你可以換成自己的路徑，例如 "assets/bg.png" 等
-        imgBg = loadImage('/image/background.jpg');
-        imgGround = loadImage('/image/table.png');
+        imgBg = loadImage('image/background.jpg');
+        imgGround = loadImage('image/table.png');
 
         // 依質量區間提供兩種示意材質（可以自由增減）
-        blockTex.wood = loadImage('/image/block-wood.png');
-        blockTex.metal = loadImage('/image/block-metal.png');
+        blockTex.wood = loadImage('image/block-wood.png');
+        blockTex.metal = loadImage('image/block-metal.png');
     }
 
     function setup() {
