@@ -8,6 +8,12 @@ body {
   background: #0b1020;
 }
 
+@media (max-width: 1200px) {
+    html {
+        font-size: 12px;
+    }
+}
+
 /* ---------- 模擬區（底層，滿版） ---------- */
 #sim-area {
   position: fixed; /* 佔滿視窗並固定 */
@@ -136,19 +142,19 @@ body {
 }
 
 /* 各面板內容 */
-.card-body > .space { height:14px; }
+.card-body > .space { height:0.5rem; }
 
 .row { display:flex; margin:5px 0 5px; }
 .row > .left { margin-top:10px; margin-right:.5em; }
 .ui.dropdown { width:14.5em; }
-.row > div > .note { font-size:12px; display:inline-block; }
+.row > div > .note { font-size:0.75rem; display:inline-block; }
 .row.auto-gap { gap:.5em; }
 .row > .gap { width:.5em; }
 .last-row { margin-bottom:-3px; }
 
-input[type="range"]{ width:16em; margin-top:-0px; }
+input[type="range"]{ width:16rem; margin-top:-0px; }
 .ui > label { padding-top:2px; }
-button#reset { margin-top:-3px; }
+button#reset { margin-top:-0.125rem; font-size:1rem; }
 div#arrow-container { margin-bottom:-8px; }
 .arrow { display:inline-block; width:32px; height:18px; margin-left:1em; transform: translate(0, 3px); background-image:url(../image/arrows.png); }
 .arrow-label { margin-top:-2px; }
