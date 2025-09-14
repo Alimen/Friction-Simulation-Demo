@@ -44,7 +44,7 @@ body {
 .info-card {
     pointer-events: auto;
     justify-self: start; /* 預設靠左（第一張） */
-    width: clamp(16.5rem, 33vw, 26rem);
+    width: clamp(17rem, 28vw, 26rem);
     max-width: 100%;
     border: 1px solid #272727;
     border-radius: 8px;
@@ -57,12 +57,12 @@ body {
 /* 第二張置中、第三張靠右 */
 .info-card:nth-child(2) {
     justify-self: center;
-    width: clamp(22rem, 33vw, 26rem);
+    width: clamp(22rem, 44vw, 26rem);
 }
 
 .info-card:nth-child(3) {
     justify-self: end;
-    width: clamp(16rem, 33vw, 26rem);
+    width: clamp(16rem, 28vw, 26rem);
 }
 
 /* 折疊標題列 */
