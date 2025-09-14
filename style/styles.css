@@ -136,7 +136,7 @@ body {
 }
 
 /* 各面板內容 */
-.card-body > .space { height:12px; }
+.card-body > .space { height:14px; }
 
 .row { display:flex; margin:5px 0 5px; }
 .row > .left { margin-top:10px; margin-right:.5em; }
