@@ -42,23 +42,28 @@ body {
 
 /* 每張卡片自身可以互動 */
 .info-card {
-  pointer-events: auto;
-  justify-self: start;    /* 預設靠左（第一張） */
-  width: min(28rem, 92vw);
-  max-width: 100%;
-  border: 1px solid #272727;
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.86);
-  backdrop-filter: blur(8px);
-  box-shadow:
-    0 8px 24px rgba(0,0,0,0.25),
-    inset 0 1px 0 rgba(255,255,255,0.6);
-  overflow: clip;
+    pointer-events: auto;
+    justify-self: start; /* 預設靠左（第一張） */
+    width: clamp(16.5rem, 33vw, 26rem);
+    max-width: 100%;
+    border: 1px solid #272727;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.86);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.6);
+    overflow: clip;
 }
 
 /* 第二張置中、第三張靠右 */
-.info-card:nth-child(2) { justify-self: center; }
-.info-card:nth-child(3) { justify-self: end; }
+.info-card:nth-child(2) {
+    justify-self: center;
+    width: clamp(22rem, 33vw, 26rem);
+}
+
+.info-card:nth-child(3) {
+    justify-self: end;
+    width: clamp(16rem, 33vw, 26rem);
+}
 
 /* 折疊標題列 */
 .info-card > summary {
@@ -113,7 +118,9 @@ body {
     top: 0.75rem;
     padding-inline: 0.75rem;
   }
-  .info-card {
+  .info-card,
+  .info-card:nth-child(2),
+  .info-card:nth-child(3) {
     width: 100%;
     justify-self: stretch;
   }
@@ -133,13 +140,13 @@ body {
 
 .row { display:flex; margin:5px 0 5px; }
 .row > .left { margin-top:10px; margin-right:.5em; }
-.ui.dropdown { width:12em; }
+.ui.dropdown { width:14.5em; }
 .row > div > .note { font-size:12px; display:inline-block; }
 .row.auto-gap { gap:.5em; }
-.row > .gap { width:1em; }
+.row > .gap { width:.5em; }
 .last-row { margin-bottom:-3px; }
 
-input[type="range"]{ width:17.5em; margin-top:-0px; }
+input[type="range"]{ width:16em; margin-top:-0px; }
 .ui > label { padding-top:2px; }
 button#reset { margin-top:-3px; }
 div#arrow-container { margin-bottom:-8px; }
