@@ -80,7 +80,7 @@
 
         // 繪製地面
         // 你原本應該有一條「地面線」的 y 值，這裡沿用。若沒有，給一個靠下的預設值。
-        const groundY = h - 80;
+        const groundY = h - 35;
         if (imgGround) {
             // 以畫布寬度鋪一條帶狀，地面圖高度可自由設定（這裡用原圖高或自訂厚度）
             const groundStripH = imgGround.height * 0.8;
