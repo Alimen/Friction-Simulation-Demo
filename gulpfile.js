@@ -1,6 +1,8 @@
 const { src, dest, parallel, series } = require('gulp');
 const terser = require('gulp-terser');
 const cleanCss = require('gulp-clean-css');
+const postcss = require('gulp-postcss');
+const postcssUrl = require('postcss-url');
 const concat = require('gulp-concat');
 const htmlReplace = require('gulp-html-replace');
 const del = require('del');
@@ -27,8 +29,15 @@ function copyMinJs() {
 // 4) 合併並壓縮 .css
 function buildCss() {
     return src('style/**/*.css')
-        .pipe(cleanCss({ compatibility: 'ie8', level: { 1: { specialComments: 0 } } }))
         .pipe(concat('styles.css'))
+        .pipe(postcss(
+            [postcssUrl({ url: 'rebase' })],  // 核心：自動重算相對路徑
+            {
+                from: 'src/style',
+                to: 'dist'
+            }
+        ))
+        .pipe(cleanCss({ compatibility: 'ie8', level: { 1: { specialComments: 0 } } }))
         .pipe(dest('dist'));
 }
 
