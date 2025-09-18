@@ -83,7 +83,6 @@
 
         chkShowForces.addEventListener('change', () => {
             const show = chkShowForces.checked;
-            arrowForce.hidden = !show
             arrowNormal.hidden = !show;
             arrowGravity.hidden = !show;
         });

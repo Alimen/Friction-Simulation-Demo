@@ -155,7 +155,7 @@ body {
 input[type="range"]{ width:16rem; margin-top:-0px; }
 .ui > label { padding-top:2px; }
 button#reset { margin-top:-0.125rem; font-size:1rem; }
-div#arrow-container { margin-bottom:-8px; }
+div#arrow-container { display:flex; flex-wrap:wrap; margin-bottom:-3px; width:24rem }
 .arrow { display:inline-block; width:32px; height:18px; margin-left:1em; transform: translate(0, 3px); background-image:url(../image/arrows.png); }
 .arrow-label { margin-top:-2px; }
 .arrow#arrow-force-img { background-position:0 0; }
@@ -164,7 +164,7 @@ div#arrow-container { margin-bottom:-8px; }
 .arrow#arrow-static-img { background-position:0 -54px; }
 .arrow#arrow-dynamic-img { background-position:0 -72px; }
 
-.stats{ display:grid; grid-template-columns: repeat(3, 1fr); gap:8px; }
+.stats{ display:grid; grid-template-columns: repeat(3, 1fr); gap:8px; text-align:center; }
 .stat{ background:rgb(248, 250, 252); border:1px solid var(--border); border-radius:10px; padding:8px; text-align:center; }
-.stat .v{ font-size:20px; font-weight:700; }
+.stat .v{ font-size:1.25rem; font-weight:700; }
 

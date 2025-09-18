@@ -5,7 +5,7 @@
 
     // 視覺比例（只在繪圖，用不到物理）
     let pixelsPerMeter = 90;       // 1 m = 90 px
-    let forcePixelsPerNewton = 6;  // 1 N = 6 px
+    let forcePixelsPerNewton = 7;  // 1 N = 6 px
     let accTime = 0;
 
     // 影像資產
@@ -33,6 +33,9 @@
 
         // 用中心對齊較易畫出等比圖
         imageMode(CENTER);
+
+        // 先更新一次箭頭的視覺比例
+        forcePixelsPerNewton = constrain(Math.round(height / 72), 3, 10);
     }
 
     function draw() {
@@ -54,7 +57,7 @@
     function windowResized() {
         // 視窗改變時，微調箭頭比例
         resizeCanvas(windowWidth, windowHeight);
-        forcePixelsPerNewton = constrain(Math.round(width / 160), 3, 10);
+        forcePixelsPerNewton = constrain(Math.round(height / 72), 3, 10);
     }
 
     // --- 繪圖 ---
@@ -80,16 +83,26 @@
 
         // 繪製地面
         // 你原本應該有一條「地面線」的 y 值，這裡沿用。若沒有，給一個靠下的預設值。
-        const groundY = h - 35;
+        const groundY = h * 0.72;
         if (imgGround) {
             // 以畫布寬度鋪一條帶狀，地面圖高度可自由設定（這裡用原圖高或自訂厚度）
-            const groundStripH = imgGround.height * 0.8;
+            const groundStripTopH = 150 * 0.8; // 地面圖原始高度 = 200。下方裁掉 50px 當延伸桌腳，再壓扁 80% 做透視調整。
+            const groundStripBottomH = h - groundY + 100 - groundStripTopH;
+
+            const imageH = imgGround.height;
             const groundStripW = w + 60;
             const offsetY = -50;
+
+            const cx = w * 0.5, rx = cx + groundStripW * 0.5 - 50, lx = cx - groundStripW * 0.5 + 50;
+            const cy = groundY + offsetY, uy = cy + groundStripTopH * 0.5, by = cy + groundStripTopH + groundStripBottomH * 0.5;
+
             // 用 CENTER 對齊，讓圖的中心落在 (w/2, groundY + groundStripH/2)
-            image(imgGround, w * 0.5, groundY + offsetY + groundStripH * 0.5, groundStripW - 200 + 2, groundStripH, 100, 0, imgGround.width - 200, imgGround.height);
-            image(imgGround, w * 0.5 + groundStripW * 0.5 - 50, groundY + offsetY + groundStripH * 0.5, 100, groundStripH, imgGround.width - 100, 0, 100, imgGround.height);
-            image(imgGround, w * 0.5 - groundStripW * 0.5 + 50, groundY + offsetY + groundStripH * 0.5, 100, groundStripH, 0, 0, 100, imgGround.height);
+            image(imgGround, cx, uy, groundStripW - 200 + 2, groundStripTopH, 100, 0, imgGround.width - 200, groundStripTopH / 0.8); // 中上
+            image(imgGround, rx, uy, 100, groundStripTopH, imgGround.width - 100, 0, 100, groundStripTopH / 0.8);                    // 右上
+            image(imgGround, lx, uy, 100, groundStripTopH, 0, 0, 100, groundStripTopH / 0.8);                                        // 左上
+            image(imgGround, cx, by, groundStripW - 200 + 2, groundStripBottomH, 100, imageH - 50, imgGround.width - 200, 50); // 中下
+            image(imgGround, rx, by, 100, groundStripBottomH, imgGround.width - 100, imageH - 50, 100, 50);                    // 右下
+            image(imgGround, lx, by, 100, groundStripBottomH, 0, imageH - 50, 100, 50);                                        // 左下
         } else {
             // [FALLBACK] 若地面圖未載到，退回原本的線條畫法
             stroke(60); strokeWeight(2);
@@ -131,13 +144,13 @@
         }
 
         // 計算箭頭長度的公式
-        const L = (F) => F * forcePixelsPerNewton;
+        const L = (F) => F * forcePixelsPerNewton * 0.25;
         const N = (F) => F * forcePixelsPerNewton * 0.25;
 
-        if (FrictionGui.showForces()) {
-            // 施力 F_app — 紅
-            drawArrow(cx, cy, cx + L(st.forces.applied), cy, '#dc3c3c');
+        // 施力 F_app — 紅
+        drawArrow(cx, cy, cx + L(st.forces.applied), cy, '#dc3c3c');
 
+        if (FrictionGui.showForces()) {
             // 重力 mg — 黑
             drawArrow(cx, cy, cx, cy + N(st.forces.gravity), '#202020');
 
@@ -166,7 +179,7 @@
         const head = constrain(len * 0.18, 8, 16);
         const bx = x1 - ux * head, by = y1 - uy * head;
 
-        stroke(col); fill(col); strokeWeight(3);
+        stroke(col); fill(col); strokeWeight(9);
         line(x0, y0, bx, by);
 
         const side = head * 0.4;
