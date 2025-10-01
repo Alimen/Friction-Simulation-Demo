@@ -53,8 +53,10 @@
             fTotal = Fnet;
         }
 
-        state.v += ax * dt;
-        state.x += state.v * dt;
+        if (!state.paused) {
+            state.v += ax * dt;
+            state.x += state.v * dt;
+        }
         state.a = ax;
         state.fric = fric;
         state.fTotal = fTotal;
@@ -87,7 +89,7 @@
         setAppliedForce: (fx) => { appliedForceX = +fx; },
 
         // 控制
-        pause: (p = true) => { state.paused = !!p; },
+        pause: () => { state.paused = true },
         resume: () => { state.paused = false; },
         reset: () => { state.t = 0; state.x = x0; state.v = v0; state.a = 0; },
 

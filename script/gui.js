@@ -13,8 +13,8 @@
     const chkShowFrictions = document.querySelector('#showFrictions');
     const chkShowForces = document.querySelector('#showForces');
     const resetBtn = document.querySelector("#reset");
+    const pauseBtn = document.querySelector("#pause");
 
-    const arrowForce = document.querySelector('#arrow-force');
     const arrowNormal = document.querySelector('#arrow-normal');
     const arrowGravity = document.querySelector('#arrow-gravity');
     const arrowStatic = document.querySelector('#arrow-static');
@@ -89,6 +89,17 @@
 
         resetBtn.addEventListener('click', () => {
             FrictionSim.reset();
+        });
+
+        pauseBtn.addEventListener('click', () => {
+            const state = FrictionSim.getState();
+            if (state.paused) {
+                pauseBtn.innerHTML = '暫停';
+                FrictionSim.resume();
+            } else {
+                pauseBtn.innerHTML = '繼續';
+                FrictionSim.pause();
+            }
         });
     }
 

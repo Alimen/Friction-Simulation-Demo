@@ -41,14 +41,13 @@
     function draw() {
         // 固定步長積分：用 p5 的 deltaTime 來累積
         const dt = Math.min(50, deltaTime) / 1000;
-        const st = FrictionSim.getState();
-        if (!st.paused) {
-            accTime += dt;
-            const fixedDt = FrictionSim.getFixedDt();
-            while (accTime >= fixedDt) {
-                FrictionSim.step(fixedDt);
-                accTime -= fixedDt;
-            }
+
+        // 呼叫 FrictionSim 處理物理步進 (st.paused 移至內部判斷)
+        accTime += dt;
+        const fixedDt = FrictionSim.getFixedDt();
+        while (accTime >= fixedDt) {
+            FrictionSim.step(fixedDt);
+            accTime -= fixedDt;
         }
 
         renderScene();
